@@ -1,0 +1,52 @@
+-- Project: Health Care Management Systems
+
+
+-- Create the doctors table
+CREATE TABLE Doctors  (
+  	doctor_id INT PRIMARY KEY,
+  	doctor_name VARCHAR(100),
+  	doctor_specialty VARCHAR(50)
+  );
+
+-- Create the table for patients
+CREATE TABLE patients  (
+  	patient_id INT PRIMARY KEY,
+  	patient_name VARCHAR(100),
+  	birth_date DATE, 
+  	doctor_id INT, 
+  FOREIGN KEY (doctor_id) REFERENCES Doctors(doctor_id)
+  );
+
+-- Insert data into the doctors table
+INSERT INTO Doctors (doctor_id, doctor_name, doctor_specialist)
+VALUES
+	  (1, 'Dr. Grey', 'General'),
+    (2, 'Dr. Yang', 'Cardiology'),
+    (3, 'Dr. Karev', 'Pediatrics'),
+    (4, 'Dr. Shepherd', 'Neurologist');
+
+-- Insert data into the patients table
+INSERT INTO patients (patient_id, patient_name, birth_date, doctor_id)
+VALUES
+	(1, 'Kelly Brown', '1973-07-27', 1),
+    (2, 'Nia Kinney', '2005-03-13', 2),
+    (3, 'Joseph Smith', '2010-09-08', 3),
+    (4, 'Annie Rose', '1963-05-22', 4);
+
+-- Selecting all of the doctors from the doctors table
+SELECT * FROM doctors;
+
+-- Selecting all of the patients from the patients table
+SELECT * FROM patients;
+
+-- Query: Displaying the patients with their assigned doctors
+SELECT patients.patient_name, doctors.doctor_name
+FROM patients
+JOIN Doctors on patients.doctor_id = doctors.doctor_id;
+
+-- Query: Count the number of patients assigned to each doctor
+SELECT Doctors.doctor_name, COUNT(*) AS num_patients
+FROM Doctors
+JOIN patients ON Doctors.doctor_id = patient.doctor_id
+GROUP BY Doctors.doctor_name;
+
